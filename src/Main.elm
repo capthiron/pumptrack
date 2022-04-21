@@ -1,8 +1,9 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, div, h1, img, text)
-import Html.Attributes exposing (class, src)
+import FeatherIcons
+import Html exposing (Html, div, h1, i, img, span, text)
+import Html.Attributes exposing (attribute, class, id, src)
 
 
 
@@ -37,16 +38,32 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "bg-nord0" ]
+    div [ class "app" ]
         [ viewMenu
         , viewContent
         ]
 
 
+viewMenu : Html msg
 viewMenu =
-    div [] [ text "Menu" ]
+    div [ id "menu" ]
+        [ span [ class "menu-buttons" ]
+            [ viewMenuButton "info" FeatherIcons.info ]
+        , span [ class "menu-buttons" ]
+            [ viewMenuButton "stats" FeatherIcons.activity
+            , viewMenuButton "leaderboard" FeatherIcons.award
+            , viewMenuButton "settings" FeatherIcons.settings
+            ]
+        ]
 
 
+viewMenuButton : String -> FeatherIcons.Icon -> Html msg
+viewMenuButton name icon =
+    icon
+        |> FeatherIcons.toHtml [ id name ]
+
+
+viewContent : Html msg
 viewContent =
     div [ class "text-2xl" ] [ text "Content" ]
 

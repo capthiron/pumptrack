@@ -13,6 +13,18 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	@apply bg-nord0 text-nord10;
+html, body {
+	@apply h-full w-full bg-nord0 text-nord10;
+}
+
+.app {
+	@apply h-full w-full p-4
+}
+
+#menu {
+	@apply flex justify-between gap-3;
+}
+
+.menu-buttons {
+	@apply flex gap-3
 }
