@@ -17,7 +17,7 @@ html, body {
 	@apply h-full w-full bg-nord0 text-nord10;
 }
 
-.app {
+main {
 	@apply h-full w-full p-4
 }
 

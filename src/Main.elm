@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import FeatherIcons
-import Html exposing (Html, div, h1, i, img, span, text)
+import Html exposing (Html, div, h1, i, img, main_, span, text)
 import Html.Attributes exposing (attribute, class, id, src)
 
 
@@ -38,7 +38,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "app" ]
+    main_ []
         [ viewMenu
         , viewContent
         ]
