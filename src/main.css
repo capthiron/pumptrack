@@ -5,6 +5,9 @@
   More context in the issue:
     https://github.com/halfzebra/create-elm-app/issues/320
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
 [data-elm-hot="true"] {
   height: inherit;
 }
@@ -15,10 +18,15 @@
 
 html, body {
 	@apply h-full w-full bg-nord0 text-nord10;
+	font-family: 'Lato', Helvetica, sans-serif;
+}
+
+body {
+	overscroll-behavior: contain;
 }
 
 main {
-	@apply h-full w-full p-4
+	@apply flex flex-col h-full w-full p-4
 }
 
 #menu {
@@ -26,5 +34,27 @@ main {
 }
 
 .menu-buttons {
-	@apply flex gap-3
+	@apply flex gap-3;
+}
+
+.content {
+	@apply h-full w-full grid items-center justify-center;
+}
+
+.progress-circle {
+	@apply relative grid h-64 w-64 bg-nord10 rounded-full;
+	place-items: center;
+	/* filter: drop-shadow(0.5em 0.5em 1em #060E1E) drop-shadow(-0.5em -0.5em 1em #2F3541); */
+}
+
+.progress-circle:before {
+	@apply absolute bg-nord0 rounded-full;
+	content: "";
+	height: 88%;
+	width: 88%;
+	box-shadow: inset -3px -3px 20px #2F3541, inset 3px 3px 20px #060E1E;
+}
+
+.push-to-start {
+	@apply relative;
 }

@@ -65,7 +65,24 @@ viewMenuButton name icon =
 
 viewContent : Html msg
 viewContent =
-    div [ class "text-2xl" ] [ text "Content" ]
+    div [ class "content" ]
+        [ viewProgressCircle
+        ]
+
+
+viewProgressCircle : Html msg
+viewProgressCircle =
+    div [ class "progress-circle" ]
+        [ viewPushToStart
+        ]
+
+
+viewPushToStart : Html msg
+viewPushToStart =
+    div [ class "push-to-start" ]
+        [ text "Push"
+        , text "0/100"
+        ]
 
 
 
