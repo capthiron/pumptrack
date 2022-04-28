@@ -55,6 +55,26 @@ main {
 	box-shadow: inset -3px -3px 20px #2F3541, inset 3px 3px 20px #060E1E;
 }
 
+.progress {
+	@apply relative flex flex-col items-center cursor-pointer;
+}
+
+.relative-progress {
+}
+
+.relative-progress-value {
+	@apply text-6xl;
+	color: #FBE1FD;
+}
+
+.relative-progress-percent-sign {
+	@apply absolute text-lg;
+}
+
+.absolute-progress {
+	@apply font-normal;
+}
+
 .push-to-start {
 	@apply relative flex flex-col items-center cursor-pointer;
 	transform: translate(0, 10%);
@@ -67,6 +87,3 @@ main {
 	text-shadow: 1px 1px 3.5px #343a48, 0 0 #060e1e;
 }
 
-.absolute-progress {
-	@apply font-normal;
-}

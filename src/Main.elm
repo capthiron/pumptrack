@@ -4,6 +4,7 @@ import Browser
 import FeatherIcons
 import Html exposing (Html, div, h1, i, img, main_, span, text)
 import Html.Attributes exposing (attribute, class, id, src)
+import Html exposing (progress)
 
 
 
@@ -11,12 +12,28 @@ import Html.Attributes exposing (attribute, class, id, src)
 
 
 type alias Model =
-    {}
+    { progress : Progress
+    }
+
+
+type alias Progress =
+    { done : Int
+    , total : Int
+    }
+
+
+initialModel : { progress : { done : number, total : number } }
+initialModel =
+    { progress =
+        { done = 75
+        , total = 100
+        }
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( initialModel, Cmd.none )
 
 
 
@@ -40,7 +57,7 @@ view : Model -> Html Msg
 view model =
     main_ []
         [ viewMenu
-        , viewContent
+        , viewContent model
         ]
 
 
@@ -63,17 +80,17 @@ viewMenuButton name icon =
         |> FeatherIcons.toHtml [ id name ]
 
 
-viewContent : Html msg
-viewContent =
+viewContent : Model -> Html msg
+viewContent model =
     div [ class "content" ]
-        [ viewProgressCircle
+        [ viewProgressCircle model.progress
         ]
 
 
-viewProgressCircle : Html msg
-viewProgressCircle =
+viewProgressCircle : Progress -> Html msg
+viewProgressCircle progress =
     div [ class "progress-circle" ]
-        [ viewPushToStart
+        [ viewProgress progress
         ]
 
 
@@ -81,8 +98,33 @@ viewPushToStart : Html msg
 viewPushToStart =
     div [ class "push-to-start" ]
         [ span [ class "push" ] [ text "Push" ]
-        , span [ class "absolute-progress" ] [ text "0/100" ]
+        , viewAbsoluteProgress 0 100
         ]
+
+
+viewProgress : Progress -> Html msg
+viewProgress progress =
+    div [ class "progress" ]
+        [ viewRelativeProgress (calcPercentage progress.done progress.total)
+        , viewAbsoluteProgress progress.done progress.total
+        ]
+
+
+viewRelativeProgress : Int -> Html msg
+viewRelativeProgress value =
+    div [ class "relative-progress" ]
+        [ span [ class "relative-progress-value" ] [ text (String.fromInt value) ]
+        , span [ class "relative-progress-percent-sign" ] [ text "%" ]
+        ]
+
+
+calcPercentage : Int -> Int -> Int
+calcPercentage part whole = floor ((toFloat part / toFloat whole) * 100)
+
+
+viewAbsoluteProgress : Int -> Int -> Html msg
+viewAbsoluteProgress done total =
+    span [ class "absolute-progress" ] [ text (String.fromInt done ++ "/" ++ String.fromInt total) ]
 
 
 
