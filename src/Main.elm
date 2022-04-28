@@ -1,10 +1,10 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Browser
 import FeatherIcons
-import Html exposing (Html, div, h1, i, img, main_, span, text)
+import Html exposing (Html, div, h1, i, img, main_, progress, span, text)
 import Html.Attributes exposing (attribute, class, id, src)
-import Html exposing (progress)
+import Html.Events exposing (onClick)
 
 
 
@@ -19,14 +19,16 @@ type alias Model =
 type alias Progress =
     { done : Int
     , total : Int
+    , steps : Int
     }
 
 
-initialModel : { progress : { done : number, total : number } }
+initialModel : Model
 initialModel =
     { progress =
-        { done = 75
-        , total = 100
+        { done = 0
+        , total = 495
+        , steps = 20
         }
     }
 
@@ -41,15 +43,50 @@ init =
 
 
 type Msg
-    = NoOp
+    = ProgressCirclePressed
+    | ProgressCircleChanged Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        ProgressCirclePressed ->
+            ( model, updateProgressCircle model.progress )
+
+        ProgressCircleChanged updatedDone ->
+            let
+                currentProgress =
+                    model.progress
+
+                updatedProgress =
+                    { currentProgress
+                        | done = updatedDone
+                    }
+            in
+            ( { model | progress = updatedProgress }, Cmd.none )
 
 
 
+---- Subscriptions ----
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    onProgressChange ProgressCircleChanged
+
+
+
+---- Ports ----
+
+
+port updateProgressCircle : Progress -> Cmd msg
+
+
+port onProgressChange : (Int -> msg) -> Sub msg
+
+
+
+-- ( model, Cmd.none )
 ---- VIEW ----
 
 
@@ -80,17 +117,21 @@ viewMenuButton name icon =
         |> FeatherIcons.toHtml [ id name ]
 
 
-viewContent : Model -> Html msg
+viewContent : Model -> Html Msg
 viewContent model =
     div [ class "content" ]
         [ viewProgressCircle model.progress
         ]
 
 
-viewProgressCircle : Progress -> Html msg
+viewProgressCircle : Progress -> Html Msg
 viewProgressCircle progress =
-    div [ class "progress-circle" ]
-        [ viewProgress progress
+    div [ class "progress-circle", onClick ProgressCirclePressed ]
+        [ if progress.done > 0 then
+            viewProgress progress
+
+          else
+            viewPushToStart
         ]
 
 
@@ -119,7 +160,8 @@ viewRelativeProgress value =
 
 
 calcPercentage : Int -> Int -> Int
-calcPercentage part whole = floor ((toFloat part / toFloat whole) * 100)
+calcPercentage part whole =
+    floor ((toFloat part / toFloat whole) * 100)
 
 
 viewAbsoluteProgress : Int -> Int -> Html msg
@@ -137,5 +179,5 @@ main =
         { view = view
         , init = \_ -> init
         , update = update
-        , subscriptions = always Sub.none
+        , subscriptions = subscriptions 
         }

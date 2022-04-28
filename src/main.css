@@ -56,10 +56,11 @@ main {
 }
 
 .progress {
-	@apply relative flex flex-col items-center cursor-pointer;
+	@apply relative flex flex-col items-center cursor-pointer pointer-events-none;
 }
 
 .relative-progress {
+	@apply select-none;
 }
 
 .relative-progress-value {
@@ -72,16 +73,16 @@ main {
 }
 
 .absolute-progress {
-	@apply font-normal;
+	@apply font-normal select-none;
 }
 
 .push-to-start {
-	@apply relative flex flex-col items-center cursor-pointer;
+	@apply relative flex flex-col items-center cursor-pointer pointer-events-none;
 	transform: translate(0, 10%);
 }
 
 .push {
-	@apply font-black uppercase;
+	@apply font-black uppercase select-none;
 	font-size: 4.15rem;
 	color: transparent;
 	text-shadow: 1px 1px 3.5px #343a48, 0 0 #060e1e;
