@@ -56,5 +56,17 @@ main {
 }
 
 .push-to-start {
-	@apply relative;
+	@apply relative flex flex-col items-center cursor-pointer;
+	transform: translate(0, 10%);
+}
+
+.push {
+	@apply font-black uppercase;
+	font-size: 4.15rem;
+	color: transparent;
+	text-shadow: 1px 1px 3.5px #343a48, 0 0 #060e1e;
+}
+
+.absolute-progress {
+	@apply font-normal;
 }

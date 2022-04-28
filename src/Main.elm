@@ -80,8 +80,8 @@ viewProgressCircle =
 viewPushToStart : Html msg
 viewPushToStart =
     div [ class "push-to-start" ]
-        [ text "Push"
-        , text "0/100"
+        [ span [ class "push" ] [ text "Push" ]
+        , span [ class "absolute-progress" ] [ text "0/100" ]
         ]
 
 
